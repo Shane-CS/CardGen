@@ -31,46 +31,27 @@ def gen_contact_card():
     # Address Section
     # For address we will offer Home, Work, and Other
     if data['address_home'] != '':
-        newCard['ADR']=';TYPE=HOME:'
+        newCard['ADR']='ADR'+';TYPE=HOME:'+data['address_home']
     elif data['address_work'] != '':
-        newCard['ADR']=';TYPE=WORK:'
+        newCard['ADR']='ADR'+';TYPE=WORK:'+data['address_work']
     elif data['address_other'] != '':
-        newCard['ADR']=';TYPE=OTHER:'
+        newCard['ADR']='ADR'+';TYPE=OTHER:'+data['address_other']
         
     # vCard Required Fields
-    newCard['BEGIN']='VCARD' #Begin
-    newCard['VERSION']='3.0' #Version
+    newCard['BEGIN']='BEGIN'+'VCARD' #Begin
+    newCard['VERSION']='VERSION'+'3.0' #Version
     
     # Birthday Section
     if data['bday'] != '':
-        newCard['BDAY']=':'+data['bday'] #Birthday
+        newCard['BDAY']='BDAY'+':'+data['bday'] #Birthday
     
     # Email Section
-    # For email we will offer Personal, Work, and Other
-    # numEmails = 0
-    # if data['email_personal'] != '-1':
-    #     numEmails+=1
-    #     newCard['EMAIL']=''
-    # if data['email_work'] != '-1':
-    #     numEmails+=1
-    #     newCard['EMAIL']=''
-    # if data['email_other'] != '-1':
-    #     numEmails+=1
-    #     newCard['EMAIL']=''
-    # if numEmails == 1:
-    #     if data['email_personal'] != '-1':
-    #         newCard['EMAIL']='TYPE=personal:'
-    #     elif data['email_work'] != '-1':
-    #         newCard['EMAIL']='TYPE=work:'
-    #     elif data['email_other'] != '-1':
-    #         newCard['EMAIL']='TYPE=other:'
-    # elif numEmails > 1:
     if data['email_personal'] != '':
-        newCard['EMAIL']=';TYPE=personal:'+data['email_personal']
+        newCard['EMAIL']='EMAIL'+';TYPE=personal:'+data['email_personal']
     if data['email_work'] != '':
-        newCard['EMAIL']=';TYPE=work:'+data['email_work']
+        newCard['EMAIL']='EMAIL'+';TYPE=work:'+data['email_work']
     if data['email_other'] != '':
-        newCard['EMAIL']=';TYPE=other:'+data['email_other']
+        newCard['EMAIL']='EMAIL'+';TYPE=other:'+data['email_other']
 
     # vCard Required Fields
     newCard['END']='VCARD' #End
@@ -120,4 +101,4 @@ def gen_contact_card():
     # newCard['']=''
     print(newCard)
 
-    return jsonify(data)
+    return jsonify(newCard)

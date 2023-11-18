@@ -3,7 +3,7 @@ import './App.css';
 import { useState } from 'react';
 import APIService from './APIService.js'
 
-function CardGen(props) {
+function CardGen() {
     const [name, setName] = useState("");
     const [full_name, setFullName] = useState("");
     const [email_personal, setEmailPersonal] = useState("");
@@ -24,7 +24,7 @@ function CardGen(props) {
 
     const insertArticle = () =>{
         APIService.InsertArticle({name, full_name, email_personal, email_work, email_other, bday, address_home, address_work, address_other, notes, org, photo, role, tel_home, tel_work, tel_mobile, title})
-        .then((response) => props.insertedArticle(response))
+        .then((response) => console.log(response))
         .catch(error => console.log('error',error))
     }
 
@@ -32,6 +32,28 @@ function CardGen(props) {
         event.preventDefault();
         insertArticle();
         alert('A name was submitted: ' + name);
+    }
+
+    const setTestValues = () => {
+        console.log("Setting test values");
+        console.log(process.env.REACT_APP_NAME);
+        setName(process.env.REACT_APP_NAME);
+        setFullName(process.env.REACT_APP_FULL_NAME);
+        setEmailPersonal(process.env.REACT_APP_EMAIL_PERSONAL);
+        setEmailWork(process.env.REACT_APP_EMAIL_WORK);
+        setEmailOther(process.env.REACT_APP_EMAIL_OTHER);
+        setBday(process.env.REACT_APP_BDAY);
+        setAddressHome(process.env.REACT_APP_ADDRESS_HOME);
+        setAddressWork(process.env.REACT_APP_ADDRESS_WORK);
+        setAddressOther(process.env.REACT_APP_ADDRESS_OTHER);
+        setNotes(process.env.REACT_APP_NOTES);
+        setOrg(process.env.REACT_APP_ORG);
+        setPhoto(process.env.REACT_APP_PHOTO);
+        setRole(process.env.REACT_APP_ROLE);
+        setTelHome(process.env.REACT_APP_TEL_HOME);
+        setTelWork(process.env.REACT_APP_TEL_WORK);
+        setTelMobile(process.env.REACT_APP_TEL_MOBILE);
+        setTitle(process.env.REACT_APP_TITLE);
     }
     return (
         <div>
@@ -86,6 +108,7 @@ function CardGen(props) {
                 </label>
                 <input type="submit" value="Submit"></input>
             </form>
+            <button onClick={setTestValues}>Click to set test values</button>
         </div>
     );
 }
