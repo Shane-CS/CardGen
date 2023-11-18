@@ -31,15 +31,15 @@ def gen_contact_card():
     # Address Section
     # For address we will offer Home, Work, and Other
     if data['address_home'] != '':
-        newCard['ADR']='ADR'+';TYPE=HOME:'+data['address_home']
-    elif data['address_work'] != '':
-        newCard['ADR']='ADR'+';TYPE=WORK:'+data['address_work']
-    elif data['address_other'] != '':
-        newCard['ADR']='ADR'+';TYPE=OTHER:'+data['address_other']
+        newCard['ADRh']='ADR'+';TYPE=HOME:'+data['address_home']
+    if data['address_work'] != '':
+        newCard['ADRw']='ADR'+';TYPE=WORK:'+data['address_work']
+    if data['address_other'] != '':
+        newCard['ADRo']='ADR'+';TYPE=OTHER:'+data['address_other']
         
     # vCard Required Fields
-    newCard['BEGIN']='BEGIN'+'VCARD' #Begin
-    newCard['VERSION']='VERSION'+'3.0' #Version
+    newCard['BEGIN']='BEGIN'+':'+'VCARD' #Begin
+    newCard['VERSION']='VERSION'+':'+'3.0' #Version
     
     # Birthday Section
     if data['bday'] != '':
@@ -47,45 +47,45 @@ def gen_contact_card():
     
     # Email Section
     if data['email_personal'] != '':
-        newCard['EMAIL']='EMAIL'+';TYPE=personal:'+data['email_personal']
+        newCard['EMAILp']='EMAIL'+';TYPE=personal:'+data['email_personal']
     if data['email_work'] != '':
-        newCard['EMAIL']='EMAIL'+';TYPE=work:'+data['email_work']
+        newCard['EMAILw']='EMAIL'+';TYPE=work:'+data['email_work']
     if data['email_other'] != '':
-        newCard['EMAIL']='EMAIL'+';TYPE=other:'+data['email_other']
+        newCard['EMAILo']='EMAIL'+';TYPE=other:'+data['email_other']
 
     # vCard Required Fields
-    newCard['END']='VCARD' #End
+    newCard['END']='END'+':'+'VCARD' #End
     
-    newCard['FN']=':'+data['full_name'] #Full Name
-    newCard['N']=':'+data['name'] #Name
+    newCard['FN']='FN'+':'+data['full_name'] #Full Name
+    newCard['N']='N'+':'+data['name'] #Name
     
     # Note Section
     if data['notes'] != '':
-        newCard['NOTE']='' #Note
+        newCard['NOTE']='NOTE'+';'+data['notes'] #Note
         
     # Organization Section
     if data['org'] != '':
-        newCard['ORG']='' #Organization
+        newCard['ORG']='ORG'+':'+data['org'] #Organization
         
     # Photo Section
     if data['photo'] != '':
-        newCard['PHOTO']=''
+        newCard['PHOTO']='PHOTO'+';'+data['photo'] #Photo
 
     # Role Section
     if data['role'] != '':
-        newCard['ROLE']=''
+        newCard['ROLE']='ROLE'+':'+data['role']
         
     # For telephone we will offer Mobile, Home, Work, and Other
     if data['tel_mobile'] != '':
-        newCard['TEL']=';type=CELL;type=VOICE;'+data['tel_mobile']
+        newCard['TELm']='TEL'+';type=CELL;type=VOICE;'+data['tel_mobile']
     if data['tel_home'] != '':
-        newCard['TEL']=';type=HOME;type=VOICE;'+data['tel_home']
+        newCard['TELh']='TEL'+';type=HOME;type=VOICE;'+data['tel_home']
     if data['tel_work'] != '':
-        newCard['TEL']=';type=WORK;type=VOICE;'+data['tel_work']
+        newCard['TELw']='TEL'+';type=WORK;type=VOICE;'+data['tel_work']
 
     # Title Section
     if data['title'] != '':
-        newCard['TITLE']='' #Org Title
+        newCard['TITLE']='TITLE'+':'+data['title']
         
     # Template Section
     # newCard['']=''
@@ -100,5 +100,42 @@ def gen_contact_card():
     # newCard['']=''
     # newCard['']=''
     print(newCard)
-
+    
+    vcf = ''
+    vcf += newCard['BEGIN'] + '\n'
+    vcf += newCard['VERSION'] + '\n'
+    vcf += newCard['N'] + '\n'
+    vcf += newCard['FN'] + '\n'
+    if 'ORG' in newCard:
+        vcf += newCard['ORG'] + '\n'
+    if 'TITLE' in newCard:
+        vcf += newCard['TITLE'] + '\n'
+    if 'EMAILp' in newCard:
+        vcf += newCard['EMAILp'] + '\n'
+    if 'EMAILw' in newCard:
+        vcf += newCard['EMAILw'] + '\n'
+    if 'EMAILo' in newCard:
+        vcf += newCard['EMAILo'] + '\n'
+    if 'TELm' in newCard:
+        vcf += newCard['TELm'] + '\n'
+    if 'TELh' in newCard:
+        vcf += newCard['TELh'] + '\n'
+    if 'TELw' in newCard:
+        vcf += newCard['TELw'] + '\n'
+    if 'ADRh' in newCard:
+        vcf += newCard['ADRh'] + '\n'
+    if 'ADRw' in newCard:
+        vcf += newCard['ADRw'] + '\n'
+    if 'ADRo' in newCard:
+        vcf += newCard['ADRo'] + '\n'
+    if 'BDAY' in newCard:
+        vcf += newCard['BDAY'] + '\n'
+    if 'PHOTO' in newCard:
+        vcf += newCard['PHOTO'] + '\n'
+    if 'ROLE' in newCard:
+        vcf += newCard['ROLE'] + '\n'
+    if 'NOTE' in newCard:
+        vcf += newCard['NOTE'] + '\n'
+    vcf += newCard['END'] + '\n'
+    print(vcf)
     return jsonify(newCard)

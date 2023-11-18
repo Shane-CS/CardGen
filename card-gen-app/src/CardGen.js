@@ -5,6 +5,8 @@ import APIService from './APIService.js'
 
 function CardGen() {
     const [name, setName] = useState("");
+    const [first_name, setFirstName] = useState("");
+    const [last_name, setLastName] = useState("");
     const [full_name, setFullName] = useState("");
     const [email_personal, setEmailPersonal] = useState("");
     const [email_work, setEmailWork] = useState("");
@@ -29,6 +31,8 @@ function CardGen() {
     }
 
     const handleSubmit = (event) => {
+        setName(last_name+ ';' + first_name);
+        setFullName(first_name + " " + last_name);
         event.preventDefault();
         insertArticle();
         alert('A name was submitted: ' + name);
@@ -36,9 +40,9 @@ function CardGen() {
 
     const setTestValues = () => {
         console.log("Setting test values");
-        console.log(process.env.REACT_APP_NAME);
-        setName(process.env.REACT_APP_NAME);
-        setFullName(process.env.REACT_APP_FULL_NAME);
+        console.log(process.env.REACT_APP_FIRST_NAME);
+        setFirstName(process.env.REACT_APP_FIRST_NAME);
+        setLastName(process.env.REACT_APP_LAST_NAME);
         setEmailPersonal(process.env.REACT_APP_EMAIL_PERSONAL);
         setEmailWork(process.env.REACT_APP_EMAIL_WORK);
         setEmailOther(process.env.REACT_APP_EMAIL_OTHER);
@@ -55,11 +59,19 @@ function CardGen() {
         setTelMobile(process.env.REACT_APP_TEL_MOBILE);
         setTitle(process.env.REACT_APP_TITLE);
     }
+
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label for="name">Name:
+                {/* <label for="name">Name:
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
+                </label> */}
+                <label for="name">First Name:
+                    <input type="text" value={first_name} onChange={(e) => setFirstName(e.target.value)}></input>
+                </label>
+                <label for="name">Last Name:
+                    <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)}></input>
                 </label>
                 <label for="email_personal">Personal Email:
                     <input type="text" value={email_personal} onChange={(e) => setEmailPersonal(e.target.value)}></input>
