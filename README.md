@@ -1,4 +1,4 @@
-# Project Name
+# Card Gen
 
 This project is a personal project – A vCard generator built with a ReactJS frontend and a Python Flask App backend.
 
