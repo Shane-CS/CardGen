@@ -138,8 +138,9 @@ def gen_contact_card():
         vcf += newCard['NOTE'] + '\n'
     vcf += newCard['END'] + '\n'
     print(vcf)
-    with open('card.vcf', 'w') as f:
-        f.write(vcf)
-    f = open('card.vcf', 'r')
-    return make_response(jsonify(f.read()))
+    # with open('card.vcf', 'w') as f:
+    #     f.write(vcf)
+    # f = open('card.vcf', 'r')
+    # return make_response(jsonify(f.read()))
+    return make_response(jsonify(vcf))
     return jsonify(newCard)
