@@ -43,7 +43,7 @@ def gen_contact_card():
     
     # Birthday Section
     if data['bday'] != '':
-        newCard['BDAY']='BDAY'+':'+data['bday'] #Birthday
+        newCard['BDAY']='BDAY'+':'+(data['bday'].split('T'))[0] #Birthday
     
     # Email Section
     if data['email_personal'] != '':
@@ -61,7 +61,7 @@ def gen_contact_card():
     
     # Note Section
     if data['notes'] != '':
-        newCard['NOTE']='NOTE'+';'+data['notes'] #Note
+        newCard['NOTE']='NOTE'+':'+data['notes'] #Note
         
     # Organization Section
     if data['org'] != '':
@@ -77,11 +77,11 @@ def gen_contact_card():
         
     # For telephone we will offer Mobile, Home, Work, and Other
     if data['tel_mobile'] != '':
-        newCard['TELm']='TEL'+';type=CELL;type=VOICE;'+data['tel_mobile']
+        newCard['TELm']='TEL'+';type=CELL;type=VOICE:'+data['tel_mobile']
     if data['tel_home'] != '':
-        newCard['TELh']='TEL'+';type=HOME;type=VOICE;'+data['tel_home']
+        newCard['TELh']='TEL'+';type=HOME;type=VOICE:'+data['tel_home']
     if data['tel_work'] != '':
-        newCard['TELw']='TEL'+';type=WORK;type=VOICE;'+data['tel_work']
+        newCard['TELw']='TEL'+';type=WORK;type=VOICE:'+data['tel_work']
 
     # Title Section
     if data['title'] != '':
@@ -130,12 +130,16 @@ def gen_contact_card():
         vcf += newCard['ADRo'] + '\n'
     if 'BDAY' in newCard:
         vcf += newCard['BDAY'] + '\n'
-    if 'PHOTO' in newCard:
-        vcf += newCard['PHOTO'] + '\n'
+    # if 'PHOTO' in newCard:
+    #     vcf += newCard['PHOTO'] + '\n'
     if 'ROLE' in newCard:
         vcf += newCard['ROLE'] + '\n'
     if 'NOTE' in newCard:
         vcf += newCard['NOTE'] + '\n'
     vcf += newCard['END'] + '\n'
     print(vcf)
+    with open('card.vcf', 'w') as f:
+        f.write(vcf)
+    f = open('card.vcf', 'r')
+    return make_response(jsonify(f.read()))
     return jsonify(newCard)

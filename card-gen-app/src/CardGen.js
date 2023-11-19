@@ -2,6 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import APIService from './APIService.js'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'
+
 
 function CardGen() {
     const [name, setName] = useState("");
@@ -23,18 +26,34 @@ function CardGen() {
     const [tel_work, setTelWork] = useState("");
     const [tel_mobile, setTelMobile] = useState("");
     const [title, setTitle] = useState("");
+    const [vcf, setVcf] = useState("");
 
-    const insertArticle = () =>{
+    const makeVcfDownload = (response) => {
+        console.log("Making vcf download");
+        console.log(response);
+        const element = document.createElement("a");
+        const file = new Blob([response], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = "contact.vcf";
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
+    }
+
+    const insertArticle = (newName, newFullName) =>{
+        let name = newName;
+        let full_name = newFullName;
         APIService.InsertArticle({name, full_name, email_personal, email_work, email_other, bday, address_home, address_work, address_other, notes, org, photo, role, tel_home, tel_work, tel_mobile, title})
-        .then((response) => console.log(response))
+        .then((response) => makeVcfDownload(response))
         .catch(error => console.log('error',error))
     }
 
     const handleSubmit = (event) => {
-        setName(last_name+ ';' + first_name);
-        setFullName(first_name + " " + last_name);
         event.preventDefault();
-        insertArticle();
+        let newName = (last_name + ';' + first_name);
+        let newFullName = (first_name + ' ' + last_name);
+        setName(newName);
+        setFullName(newFullName);
+        insertArticle(newName, newFullName);
         alert('A name was submitted: ' + name);
     }
 
@@ -64,9 +83,6 @@ function CardGen() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                {/* <label for="name">Name:
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
-                </label> */}
                 <label for="name">First Name:
                     <input type="text" value={first_name} onChange={(e) => setFirstName(e.target.value)}></input>
                 </label>
@@ -83,7 +99,7 @@ function CardGen() {
                     <input type="text" value={email_other} onChange={(e) => setEmailOther(e.target.value)}></input>
                 </label>
                 <label for="bday">Birthday:
-                    <input type="text" value={bday} onChange={(e) => setBday(e.target.value)}></input>
+                    <DatePicker selected={bday} onChange={bday => setBday(bday)} dateFormat='yyyy-MM-dd'></DatePicker>
                 </label>
                 <label for="address_home">Home Address:
                     <input type="text" value={address_home} onChange={(e) => setAddressHome(e.target.value)}></input>
