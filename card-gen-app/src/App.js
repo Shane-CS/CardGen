@@ -4,21 +4,17 @@ import CardGen from './CardGen.js';
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-        <CardGen />
+      <div className="App-header-bar-container">
+        <div className="App-header-bar">
+          <h2>Card Generator</h2>
+        </div>
+      </div>
+      <div className="App-body">
+        <div className="App-body-content">
+          <p>Enter your contact information below and click "Generate" to download a vCard.</p>
+          <CardGen />
+        </div>
+      </div>
     </div>
   );
 }

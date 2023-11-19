@@ -4,6 +4,7 @@ import { useState } from 'react';
 import APIService from './APIService.js'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'
+import './CardGen.css';
 
 
 function CardGen() {
@@ -31,19 +32,19 @@ function CardGen() {
         console.log("Making vcf download");
         console.log(response);
         const element = document.createElement("a");
-        const file = new Blob([response], {type: 'text/plain'});
+        const file = new Blob([response], { type: 'text/plain' });
         element.href = URL.createObjectURL(file);
         element.download = "contact.vcf";
         document.body.appendChild(element); // Required for this to work in FireFox
         element.click();
     }
 
-    const insertArticle = (newName, newFullName) =>{
+    const insertArticle = (newName, newFullName) => {
         let name = newName;
         let full_name = newFullName;
-        APIService.InsertArticle({name, full_name, email_personal, email_work, email_other, bday, address_home, address_work, address_other, notes, org, photo, role, tel_home, tel_work, tel_mobile, title})
-        .then((response) => makeVcfDownload(response))
-        .catch(error => console.log('error',error))
+        APIService.InsertArticle({ name, full_name, email_personal, email_work, email_other, bday, address_home, address_work, address_other, notes, org, photo, role, tel_home, tel_work, tel_mobile, title })
+            .then((response) => makeVcfDownload(response))
+            .catch(error => console.log('error', error))
     }
 
     const handleSubmit = (event) => {
@@ -81,60 +82,74 @@ function CardGen() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <label for="name">First Name:
-                    <input type="text" value={first_name} onChange={(e) => setFirstName(e.target.value)}></input>
-                </label>
-                <label for="name">Last Name:
-                    <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)}></input>
-                </label>
-                <label for="email_personal">Personal Email:
-                    <input type="text" value={email_personal} onChange={(e) => setEmailPersonal(e.target.value)}></input>
-                </label>
-                <label for="email_work">Work Email:
-                    <input type="text" value={email_work} onChange={(e) => setEmailWork(e.target.value)}></input>
-                </label>
-                <label for="email_other">Other Email:
-                    <input type="text" value={email_other} onChange={(e) => setEmailOther(e.target.value)}></input>
-                </label>
-                <label for="bday">Birthday:
-                    <DatePicker selected={bday} onChange={bday => setBday(bday)} dateFormat='yyyy-MM-dd'></DatePicker>
-                </label>
-                <label for="address_home">Home Address:
-                    <input type="text" value={address_home} onChange={(e) => setAddressHome(e.target.value)}></input>
-                </label>
-                <label for="address_work">Work Address:
-                    <input type="text" value={address_work} onChange={(e) => setAddressWork(e.target.value)}></input>
-                </label>
-                <label for="address_other">Other Address:
-                    <input type="text" value={address_other} onChange={(e) => setAddressOther(e.target.value)}></input>
-                </label>
-                <label for="notes">Notes:
-                    <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)}></input>
-                </label>
-                <label for="org">Organization:
-                    <input type="text" value={org} onChange={(e) => setOrg(e.target.value)}></input>
-                </label>
-                <label for="photo">Photo:
-                    <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)}></input>
-                </label>
-                <label for="role">Role:
-                    <input type="text" value={role} onChange={(e) => setRole(e.target.value)}></input>
-                </label>
-                <label for="tel_home">Home Phone:
-                    <input type="text" value={tel_home} onChange={(e) => setTelHome(e.target.value)}></input>
-                </label>
-                <label for="tel_work">Work Phone:
-                    <input type="text" value={tel_work} onChange={(e) => setTelWork(e.target.value)}></input>
-                </label>
-                <label for="tel_mobile">Mobile Phone:
-                    <input type="text" value={tel_mobile} onChange={(e) => setTelMobile(e.target.value)}></input>
-                </label>
-                <label for="title">Title:
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}></input>
-                </label>
-                <input type="submit" value="Submit"></input>
-            </form>
+            <div className="form-box">
+                <form className='contactForm' onSubmit={handleSubmit}>
+                    <div className="Name_BDay">
+                        <label for="name">First Name:
+                            <input type="text" value={first_name} onChange={(e) => setFirstName(e.target.value)}></input>
+                        </label>
+                        <label for="name">Last Name:
+                            <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)}></input>
+                        </label>
+                        <label for="bday">Birthday:
+                            <DatePicker selected={bday} onChange={bday => setBday(bday)} dateFormat='yyyy-MM-dd'></DatePicker>
+                        </label>
+                    </div>
+                    <div className="Emails">
+                        <label for="email_personal">Personal Email:
+                            <input type="text" value={email_personal} onChange={(e) => setEmailPersonal(e.target.value)}></input>
+                        </label>
+                        <label for="email_work">Work Email:
+                            <input type="text" value={email_work} onChange={(e) => setEmailWork(e.target.value)}></input>
+                        </label>
+                        <label for="email_other">Other Email:
+                            <input type="text" value={email_other} onChange={(e) => setEmailOther(e.target.value)}></input>
+                        </label>
+                    </div>
+                    <div className="Addresses">
+                        <label for="address_home">Home Address:
+                            <input type="text" value={address_home} onChange={(e) => setAddressHome(e.target.value)}></input>
+                        </label>
+                        <label for="address_work">Work Address:
+                            <input type="text" value={address_work} onChange={(e) => setAddressWork(e.target.value)}></input>
+                        </label>
+                        <label for="address_other">Other Address:
+                            <input type="text" value={address_other} onChange={(e) => setAddressOther(e.target.value)}></input>
+                        </label>
+                    </div>
+                    <div className="Phones">
+                        <label for="tel_home">Home Phone:
+                            <input type="text" value={tel_home} onChange={(e) => setTelHome(e.target.value)}></input>
+                        </label>
+                        <label for="tel_work">Work Phone:
+                            <input type="text" value={tel_work} onChange={(e) => setTelWork(e.target.value)}></input>
+                        </label>
+                        <label for="tel_mobile">Mobile Phone:
+                            <input type="text" value={tel_mobile} onChange={(e) => setTelMobile(e.target.value)}></input>
+                        </label>
+                    </div>
+                    <div className="Employment">
+                        <label for="org">Organization:
+                            <input type="text" value={org} onChange={(e) => setOrg(e.target.value)}></input>
+                        </label>
+                        <label for="title">Title:
+                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}></input>
+                        </label>
+                        <label for="role">Role:
+                            <input type="text" value={role} onChange={(e) => setRole(e.target.value)}></input>
+                        </label>
+                    </div>
+                    <div className="Other">
+                        <label for="notes">Notes:
+                            <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)}></input>
+                        </label>
+                        <label for="photo">Photo:
+                            <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)}></input>
+                        </label>
+                    </div>
+                    <input type="submit" value="Submit"></input>
+                </form>
+            </div>
             <button onClick={setTestValues}>Click to set test values</button>
         </div>
     );

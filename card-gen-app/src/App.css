@@ -1,10 +1,7 @@
 .App {
+  background-color: #282c34;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  height: 100vh;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -13,14 +10,19 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-header-bar-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 0.5vh;
+}
+
+.App-header-bar {
+  background-color: #6b768c;
+  width: 100%;
+  border-radius: 20px;
+  margin: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   color: white;
 }
 
