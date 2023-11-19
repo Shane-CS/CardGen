@@ -288,6 +288,7 @@ __generated__
 
 #Private files
 dev.vcf
+card.vcf
 
 # Local History for Visual Studio Code
 .history/

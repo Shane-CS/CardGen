@@ -26,7 +26,6 @@ function CardGen() {
     const [tel_work, setTelWork] = useState("");
     const [tel_mobile, setTelMobile] = useState("");
     const [title, setTitle] = useState("");
-    const [vcf, setVcf] = useState("");
 
     const makeVcfDownload = (response) => {
         console.log("Making vcf download");
@@ -54,7 +53,7 @@ function CardGen() {
         setName(newName);
         setFullName(newFullName);
         insertArticle(newName, newFullName);
-        alert('A name was submitted: ' + name);
+        alert('A name was submitted: ' + newFullName);
     }
 
     const setTestValues = () => {
@@ -65,7 +64,7 @@ function CardGen() {
         setEmailPersonal(process.env.REACT_APP_EMAIL_PERSONAL);
         setEmailWork(process.env.REACT_APP_EMAIL_WORK);
         setEmailOther(process.env.REACT_APP_EMAIL_OTHER);
-        setBday(process.env.REACT_APP_BDAY);
+        setBday(new Date(process.env.REACT_APP_BDAY));
         setAddressHome(process.env.REACT_APP_ADDRESS_HOME);
         setAddressWork(process.env.REACT_APP_ADDRESS_WORK);
         setAddressOther(process.env.REACT_APP_ADDRESS_OTHER);
